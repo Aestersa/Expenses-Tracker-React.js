@@ -1,0 +1,34 @@
+import React, { useState } from "react";
+import ExpensesList from "./ExpensesList";
+import "./Expenses.css";
+import ExpensesChart from "./ExpensesChart";
+import Card from "../UI/Card";
+import ExpensesFilter from "./ExpensesFilter";
+
+const Expenses = (props) => {
+  const [filteredYear, setFilteredYear] = useState("2022");
+
+  const saveFilteredYear = (data) => {
+    setFilteredYear(data);
+    console.log(filteredYear);
+  };
+
+  const filteredExpenses = props.expense.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+
+  return (
+    <div>
+      <Card className="expenses">
+        <ExpensesFilter
+          selected={filteredYear}
+          filterHandler={saveFilteredYear}
+        />
+        <ExpensesChart expenses={filteredExpenses} />
+        <ExpensesList items={filteredExpenses} />
+      </Card>
+    </div>
+  );
+};
+
+export default Expenses;
